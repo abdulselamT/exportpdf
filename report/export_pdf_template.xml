@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!--    template for export pdf without  group by-->
+    <template id="export_pdf">
+        <t t-call="web.html_container">
+            <t t-call="web.internal_layout">
+                <t t-if="is_pivot">
+                    <t t-call="exportpdf.export_pdf_pivot" />
+                </t>
+                <t t-else="">
+                    <t t-call="exportpdf.export_pdf_list" />
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <template id="export_pdf_list">
+        <div class="page" style="margin-top:20px">
+            <h4><span t-esc="display_name"/></h4>
+            <table class="table table-bordered"
+                style="table-layout: fixed">
+                <t t-foreach="headers" t-as="colname">
+                    <th style="font-size: small;">
+                        <span t-out="colname" />
+                    </th>
+                </t>
+                <t t-foreach="data" t-as="records">
+                    <tr>
+                        <t t-foreach="records" t-as="record">
+                            <td style="font-size: small;">
+                                <span t-raw="record" />
+                            </td>
+                        </t>
+                    </tr>
+                </t>
+            </table>
+        </div>
+    </template>
+
+
+
+
+    <template id="export_pdf_pivot">
+        <div class="page" style="margin-top:20px">
+            <t t-set="data" t-value="json.loads(data)" />
+            <t t-set="columns" t-value="data.get('col_group_headers')" />
+            <t t-set="measure_headers" t-value="data.get('measure_headers')" />
+            <t t-set="data_rows" t-value="data.get('rows')" />
+            <h4><span t-esc="data.get('title')"/></h4>
+            <table class="table table-bordered"
+                style="table-layout: fixed">
+                
+
+                <t t-foreach="columns" t-as="colname">
+                    <tr>
+                        <th style="font-size: x-small;">
+                            <span t-out="False" />
+                        </th>
+                        <t t-foreach="colname" t-as="col">
+                            <th t-att-colspan="col.get('width')" t-att-rowspan="col.get('height')"
+                                style="font-size: small;">
+                                <span t-out="col.get('title')" />
+                            </th>
+                        </t>
+                    </tr>
+                </t>
+                <tr>
+                    <th style="font-size: x-small;">
+                        <span t-out="False" />
+                    </th>
+                    <t t-foreach="measure_headers" t-as="mr_head">
+                        <th style="font-size: small;">
+                            <span t-out="mr_head.get('title')" />
+                        </th>
+                    </t>
+                </tr>
+
+                <t t-foreach="data_rows" t-as="records">
+                    <tr>
+                        <th style="font-size: small; text-align: left;">
+                           <span t-out="'...'*records.get('indent')" style="color:white"/>  <span t-out="records.get('title')" />
+                        </th>
+                        <t t-foreach="records.get('values')" t-as="record">
+                            <td style="font-size: x-small;">
+                                <span t-out="record['value']" />
+                            </td>
+                        </t>
+                    </tr>
+                </t>
+            </table>
+        </div>
+    </template>
+</odoo>

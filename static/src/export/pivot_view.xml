@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="downloadButtons" t-inherit="web.PivotView.Buttons" t-inherit-mode="extension">
+        <xpath expr="//div[@aria-label='Pivot settings']">
+            <button class="btn btn-secondary fa fa-download o_pivot_download" t-on-click="onDownloadButtonClickedPdf" data-tooltip="Download xlsx" aria-label="Download xlsx" t-attf-disabled="{{noDataDisplayed ? 'disabled' : false}}">
+                pdf
+                </button>
+
+        </xpath>
+        </t>
+
+
+</templates>
