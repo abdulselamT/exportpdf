@@ -1,4 +1,5 @@
-clone the repo
-and add to your custom addons 
-then install
-it will do the same as excel export
+# Clone the Repository and Add to Your Custom Addons
+
+1. **Clone the Repository**
+   ```bash
+   git clone <repository-url>
